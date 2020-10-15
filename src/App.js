@@ -27,13 +27,17 @@ class App extends Component {
 
   onChange = (event) => {
     const { name, value, type, checked } = event.target;
-    type === "checkbox"
-      ? this.setState({
-          [name]: checked,
-        })
-      : this.setState({
-          [name]: value,
-        });
+
+    this.setState({
+      [name]: type === checked ? checked : value,
+    });
+    // type === "checkbox"
+    //   ? this.setState({
+    //       [name]: checked,
+    //     })
+    //   : this.setState({
+    //       [name]: value,
+    //     });
   };
 
   onSubmit = (event) => {
