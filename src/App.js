@@ -16,26 +16,29 @@ const useStyles = makeStyles({
 
 class App extends Component {
   state = {
-    desc: "",
+    firstname: "",
+    lastname: "",
     gender: "",
-    favColor: "blue",
+    age: "",
+    location: "",
+    veg: false,
+    nonveg: false,
   };
 
-  onChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  onChange = (event) => {
+    const { name, value, type, checked } = event.target;
     type === "checkbox"
-      ? this.setState({ [name]: checked })
+      ? this.setState({
+          [name]: checked,
+        })
       : this.setState({
           [name]: value,
         });
   };
 
-  onSubmit = (e) => {
-    e.preventDefault();
-    alert(this.state.desc);
-    this.setState({
-      desc: "",
-    });
+  onSubmit = (event) => {
+    event.preventDefault();
+    console.log(this.state);
   };
 
   render() {
@@ -52,54 +55,108 @@ class App extends Component {
           This is our Button
         </Button>
         <hr />
-        <form onSubmit={this.onSubmit}>
+        <form>
           <input
             type="text"
-            placeholder="Please enter name"
-            value={this.state.desc}
+            name="firstname"
+            value={this.state.firstname}
+            placeholder="First Name"
             onChange={this.onChange}
-            name="desc"
           />
           <br />
-          <textarea value={this.state.desc} />
+          <input
+            type="text"
+            name="lastname"
+            value={this.state.lastname}
+            placeholder="Last Name"
+            onChange={this.onChange}
+          />
           <br />
-          <input type="checkbox" onChange={this.onChange} />
+          <input
+            type="text"
+            name="age"
+            value={this.state.age}
+            placeholder="Age"
+            onChange={this.onChange}
+          />
           <br />
           <label>
             <input
-              type="radio"
-              checked={this.state.gender === "male"}
-              name="gender"
-              value="male"
+              type="checkbox"
+              value=" Veg "
               onChange={this.onChange}
+              checked={this.state.veg}
+              name="veg"
             />
-            Male
+            Veg
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value=" Non Veg "
+              onChange={this.onChange}
+              checked={this.state.nonveg}
+              name="nonveg"
+            />
+            Non Veg
           </label>
           <br />
           <label>
             <input
               type="radio"
-              checked={this.state.gender === "female"}
+              name="gender"
+              value="male"
+              checked={this.state.gender === "male"}
+              onChange={this.onChange}
+            />
+            Male
+          </label>
+          <label>
+            <input
+              type="radio"
               name="gender"
               value="female"
+              checked={this.state.gender === "female"}
               onChange={this.onChange}
             />
             Female
           </label>
           <br />
-          <button>Submit</button>
+          <label>
+            Location:
+            <select
+              value={this.state.location}
+              name="location"
+              onChange={this.onChange}
+            >
+              <option>Please choose the location</option>
+              <option>Mumbai</option>
+              <option>Delhi</option>
+              <option>Kolkatta</option>
+            </select>
+          </label>
+
           <br />
-          <select
-            name="favColor"
-            onChange={this.onChange}
-            value={this.state.favColor}
+          <br />
+          <Button
+            variant="outlined"
+            className={useStyles.buttonStyles}
+            onClick={this.onSubmit}
           >
-            <option value="blue">Blue</option>
-            <option value="green">Green</option>
-            <option value="red">Red</option>
-          </select>
-          <h1>You are {this.state.gender}</h1>
-          <h1>Color: {this.state.favColor}</h1>
+            submit
+          </Button>
+          <hr />
+          <div>
+            <h1>Entered Information:</h1>
+            <p>
+              Your name: {this.state.firstname} {this.state.lastname}
+            </p>
+            <p>Your age: {this.state.age}</p>
+            <p>You are: {this.state.gender}</p>
+            <p>You stay at: {this.state.location}</p>
+            <p>Vegan: {this.state.veg ? "Yes" : "No"}</p>
+            <p>Non Vegan: {this.state.nonveg ? "Yes" : "No"}</p>
+          </div>
         </form>
       </div>
     );
